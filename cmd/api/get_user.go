@@ -4,11 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/rs/zerolog/log"
-
-	"github.com/gustvision/backend-interview/pkg/account"
 	"github.com/gustvision/backend-interview/pkg/user"
 	"github.com/gustvision/backend-interview/pkg/user/dto"
+	"github.com/rs/zerolog/log"
 )
 
 func (h *handler) GetUser(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +23,7 @@ func (h *handler) GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	u, err := h.user.Fetch(ctx, user.Filter{req.ID})
+	u, err := h.user.Fetch(ctx, user.Filter{ID: req.ID})
 	if err != nil {
 		logger.Error().Err(err).Msg("failed to fetch user")
 		http.Error(w, "failed to fetch user", http.StatusInternalServerError)
@@ -33,29 +31,9 @@ func (h *handler) GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// # Compute user total
 	var total float64
-
-	if err := h.account.FetchMany(ctx, account.Filter{UserID: u.ID}, func(a account.Account) error {
-		if err := h.account.FetchManyTransaction(ctx, account.FilterTransaction{
-			AccountID: a.ID,
-		}, func(t account.Transaction) error {
-			total += t.Amount
-
-			return nil
-		}); err != nil {
-			logger.Error().Err(err).Msg("failed to fetch transaction")
-			http.Error(w, "failed to fetch transaction", http.StatusInternalServerError)
-
-			return err
-		}
-
-		return nil
-	}); err != nil {
-		logger.Error().Err(err).Msg("failed to fetch account")
-		http.Error(w, "failed to fetch account", http.StatusInternalServerError)
-
-		return
-	}
+	_ = total
 
 	// #Marshal results.
 	raw, err := json.Marshal(dto.GetUserResp{
@@ -65,13 +43,16 @@ func (h *handler) GetUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logger.Error().Err(err).Msg("failed to marshal PCs")
 		http.Error(w, err.Error(), http.StatusBadRequest)
+
 		return
 	}
 
 	// #Write response
 	w.WriteHeader(http.StatusOK)
+
 	if _, err := w.Write(raw); err != nil {
 		logger.Error().Err(err).Msg("failed to write response")
+
 		return
 	}
 

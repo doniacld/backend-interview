@@ -9,8 +9,11 @@ import (
 	"syscall"
 	"time"
 
+	accountapp "github.com/gustvision/backend-interview/pkg/account/app"
+	accountsql "github.com/gustvision/backend-interview/pkg/account/sql"
 	userapp "github.com/gustvision/backend-interview/pkg/user/app"
 	usersql "github.com/gustvision/backend-interview/pkg/user/sql"
+	_ "github.com/lib/pq"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	_ "google.golang.org/grpc/encoding/gzip"
@@ -52,15 +55,24 @@ func run(prog string, filename string) {
 	}
 
 	userSQLStore := usersql.Store{DB: db}
+	accountSQLStore := accountsql.Store{DB: db}
 
 	// init handler
 	h := handler{}
 	h.user = &userapp.App{
 		Store: &userSQLStore,
 	}
+	h.account = &accountapp.App{
+		Store:            &accountSQLStore,
+		StoreTransaction: &accountSQLStore,
+	}
 
 	// serve http api
-	go func(host string) { h.listen(host) }(cfg.Host)
+	go func(host string) {
+		if err := h.listen(host); err != nil {
+			log.Error().Err(err).Msg("failed to listen")
+		}
+	}(cfg.Host)
 	log.Info().Msg("api up")
 
 	// listen for signals

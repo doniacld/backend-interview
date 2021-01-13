@@ -12,10 +12,12 @@ type handler struct {
 	account account.App
 }
 
-func (h handler) listen(host string) {
+func (h handler) listen(host string) error {
 	http.HandleFunc("/user", h.GetUser)
-	http.HandleFunc("/account", h.GetAccount)
-	http.HandleFunc("/transaction", h.GetTransaction)
 
-	http.ListenAndServe(host, nil)
+	if err := http.ListenAndServe(host, nil); err != nil {
+		return err
+	}
+
+	return nil
 }

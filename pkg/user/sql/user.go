@@ -10,12 +10,12 @@ import (
 func (s *Store) Fetch(ctx context.Context, f user.Filter) (user.User, error) {
 	b := strings.Builder{}
 	b.WriteString(`SELECT id, name `)
-	b.WriteString(`FROM user `)
+	b.WriteString(`FROM users `)
 	b.WriteString(`WHERE id = $1 ;`)
 
 	row := s.QueryRowContext(ctx, b.String(), []interface{}{
 		f.ID,
-	})
+	}...)
 
 	var u user.User
 

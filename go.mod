@@ -13,6 +13,7 @@ require (
 	github.com/gustvision/go-sql v0.0.0-20201216101806-120707e6ffb2
 	github.com/hashicorp/go-multierror v1.1.0
 	github.com/ilyakaznacheev/cleanenv v1.2.5
+	github.com/lib/pq v1.8.0
 	github.com/rs/zerolog v1.20.0
 	google.golang.org/grpc v1.34.1
 )

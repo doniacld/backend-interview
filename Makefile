@@ -40,6 +40,16 @@ integration:  ## Build integration binary
 		-o ../../bin/$(PACKAGE)_$(INTEGRATION)_$(VERSION)
 	$Q cp bin/$(PACKAGE)_$(INTEGRATION)_$(VERSION) bin/$(PACKAGE)_$(INTEGRATION)
 
+.PHONY: migrate
+migrate:  ## Migrate sql db
+	$(info $(M) migrate…) @
+	$Q psql --host=0.0.0.0 --user=postgres postgres -f migrations/00.sql
+
+.PHONY: populate
+populate:  ## Populate sql db with test data
+	$(info $(M) populate…) @
+	$Q psql --host=0.0.0.0 --user=postgres postgres -f migrations/populate.sql
+
 # Vendor
 .PHONY: vendor
 vendor:

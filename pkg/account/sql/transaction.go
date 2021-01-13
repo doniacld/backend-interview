@@ -21,7 +21,7 @@ func (s *Store) InsertTransaction(ctx context.Context, t account.Transaction) er
 		t.Amount,
 		t.AccountID,
 		t.CreatedAt,
-	}); err != nil {
+	}...); err != nil {
 		return err
 	}
 
@@ -40,7 +40,7 @@ func (s *Store) FetchManyTransaction(
 
 	rows, err := s.QueryContext(ctx, b.String(), []interface{}{
 		f.AccountID,
-	})
+	}...)
 	if err != nil {
 		return err
 	}

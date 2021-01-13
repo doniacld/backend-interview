@@ -37,7 +37,7 @@ func (s *Store) FetchMany(ctx context.Context, f account.Filter, callback func(a
 
 	rows, err := s.QueryContext(ctx, b.String(), []interface{}{
 		f.UserID,
-	})
+	}...)
 	if err != nil {
 		return err
 	}
