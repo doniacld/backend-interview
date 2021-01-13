@@ -41,9 +41,9 @@ You can fork this project and add your code/answers into it.
 
 ### 0.0
 
-- Write a new API route `CreateTransaction` to add a new transaction. Hint: `account.InsertTransaction` already exists.
+- Write a new API route `CreateTransaction` to add a new transaction. Hint: `account.InsertTransaction` SQL method already exists in draft code (`handler.account` store).
 
-- `GetUser` API route always returns a total = 0. Fix it to return approximated sum (due to float64). Hint: `account.FetchManyAccount` already exists.
+- `GetUser` API route always returns a total = 0. Fix it to return approximated sum (due to float64). Hint: `account.FetchManyAccount` SQL method already exists in draft code (`handler.account` store).
 
 ### 0.1
 
