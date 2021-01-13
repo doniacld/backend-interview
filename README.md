@@ -37,6 +37,8 @@ User must be able to insert new transactions and get his current total.
 
 For this test, we don't care about security flaws or float64 approximations.
 
+You can fork this project and add your code/answers into it.
+
 ### 0.0
 
 - Write a new API route `CreateTransaction` to add a new transaction. Hint: `account.InsertTransaction` already exists.
@@ -45,7 +47,10 @@ For this test, we don't care about security flaws or float64 approximations.
 
 ### 0.1
 
-With above routes, write some api tests to ensure app basic behaviors.
+With above routes, write some integration http api tests to ensure app basic behaviors.
+
+Unit tests are not required but appreciated.
+
 You can write tests with any tool/language.
 (focus on defining different test flows to cover most cases, "technical" dimension is not what we're looking for here)
 
@@ -68,4 +73,3 @@ Questions (text only):
 - What kind of alerts based on those metrics could we use here ? What critical conditions should we look at ?
 
 >
-
