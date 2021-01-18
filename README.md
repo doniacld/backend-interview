@@ -1,7 +1,7 @@
 # backend-interview
 This repository contains instructions and draft project for powder backend interview
 
-### requirements
+## requirements
 
 - go
 - docker
@@ -9,7 +9,7 @@ This repository contains instructions and draft project for powder backend inter
 - make
 - psql
 
-### how to setup
+## how to setup
 
 - Setup local postgres db
 ```sh
@@ -27,7 +27,7 @@ This repository contains instructions and draft project for powder backend inter
 make api && ./bin/interview_api config/api/local.json
 ```
 
-### instructions
+## instructions
 
 You inherited this project and there are issues you need to fix.
 
@@ -39,7 +39,7 @@ For this test, we don't care about security flaws or float64 approximations.
 
 You can fork this project and add your code/answers into it.
 
-### project architecture
+## project architecture
 
 ```
 cmd_|_ # main
