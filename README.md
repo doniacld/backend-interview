@@ -27,7 +27,7 @@ This repository contains instructions and draft project for powder backend inter
 make api && ./bin/interview_api config/api/local.json
 ```
 
-## instructions
+### instructions
 
 You inherited this project and there are issues you need to fix.
 
@@ -39,37 +39,49 @@ For this test, we don't care about security flaws or float64 approximations.
 
 You can fork this project and add your code/answers into it.
 
-### 0.0
+### project architecture
 
-- Write a new API route `CreateTransaction` to add a new transaction. Hint: `account.InsertTransaction` SQL method already exists in draft code (`handler.account` store).
+```
+cmd_|_ # main
+    |
+    |__api # binary
+    |
+pkg_|_ # domain
+    |
+    |__user # domain name
+      |
+      |__sql # sql STORE implementation
+      |__app # APP implementation, domain logic + store logic
+      |__dto # DataTransferObject for external objects
+```
+
+### 0.0
 
 - `GetUser` API route always returns a total = 0. Fix it to return approximated sum (due to float64). Hint: `account.FetchManyAccount` SQL method already exists in draft code (`handler.account` store).
 
+- Write a new API route `CreateTransaction` to add a new transaction. Hint: `account.InsertTransaction` SQL method already exists in draft code (`handler.account` store).
+
+- Add some minimal tests on those routes to ensure at least 1 success path. (any kind of test is ok)
+
 ### 0.1
-
-With above routes, write some integration http api tests to ensure app basic behaviors.
-
-Unit tests are not required but appreciated.
-
-You can write tests with any tool/language.
-(focus on defining different test flows to cover most cases, "technical" dimension is not what we're looking for here)
-
-### 0.2
-
-(bonus) Add a new rule where a transaction is not accepted if there is not enough money on account.
-Add a test for this case.
-
-(bonus) User now wants to know his largest expense (`transaction`) between 2 dates. Create a new route `GetMaxTransaction` which takes 2 timestamps in parameters.
-Add a test for this route.
-
-### 0.3
 
 Questions (text only):
 
-- What metrics could be interesting to observe to ensure app integrity and stability ?
+- You are running this service in production under ~100 req/s, what are your main concerns about scaling and stability ?
 
 >
 
-- What kind of alerts based on those metrics could we use here ? What critical conditions should we look at ?
+- We want to get rid of `account` intermediary table and attach directly transactions to `user`. Write up a database migration plan (+ add some example queries).
 
 >
+
+### 0.2 (bonus)
+
+- (bonus) Add a new rule where a transaction is not accepted if there is not enough money on account.
+
+- (bonus) User now wants to know his largest expense (`transaction`) between 2 dates. Create a new route `GetMaxTransaction` which takes 2 timestamps in parameters.
+
+- (bonus) Create and implement a mock on a `store` or `app` (of your choice). Using this mock, write up a benchmark comparing a route (of your choice) with and without mocks.
+Mock implementation will be check in the code part.
+For the benchmark part you need to provide a code part (no verification on clean/maintenance for this one, it's benchmark code) + benchmark results (in easy to read format plz)
+
