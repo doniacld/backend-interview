@@ -67,7 +67,15 @@ pkg_|_ # domain
 
 Questions (text only):
 
-- You are running this service in production under ~100 req/s, what are your main concerns about scaling and stability ?
+- Our AI engineer need more valuables datas to extract metrics about users and transactions. How to improve the models?
+
+>
+
+- In few month, our application will generate a lot of metrics and datas to process. Our application is currently a monolithic system communicating with a postgres database. How can we improve our data processing ?
+
+>
+
+- Still with the aim of scaling, what tools/processes would you suggest to monitor and supervise this new system?
 
 >
 
@@ -80,8 +88,3 @@ Questions (text only):
 - (bonus) Add a new rule where a transaction is not accepted if there is not enough money on account.
 
 - (bonus) User now wants to know his largest expense (`transaction`) between 2 dates. Create a new route `GetMaxTransaction` which takes 2 timestamps in parameters.
-
-- (bonus) Create and implement a mock on a `store` or `app` (of your choice). Using this mock, write up a benchmark comparing a route (of your choice) with and without mocks.
-Mock implementation will be check in the code part.
-For the benchmark part you need to provide a code part (no verification on clean/maintenance for this one, it's benchmark code) + benchmark results (in easy to read format plz)
-
