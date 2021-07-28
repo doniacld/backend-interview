@@ -65,26 +65,13 @@ pkg_|_ # domain
 
 ### 0.1
 
-Questions (text only):
+Questions :
 
-- Our AI engineer need more valuables datas to extract metrics about users and transactions. How to improve the models?
-
->
-
-- In few month, our application will generate a lot of metrics and datas to process. Our application is currently a monolithic system communicating with a postgres database. How can we improve our data processing ?
-
->
-
-- Still with the aim of scaling, what tools/processes would you suggest to monitor and supervise this new system?
-
->
-
-- We want to get rid of `account` intermediary table and attach directly transactions to `user`. Write up a database migration plan (+ add some example queries).
-
->
-
-### 0.2 (bonus)
-
-- (bonus) Add a new rule where a transaction is not accepted if there is not enough money on account.
-
-- (bonus) User now wants to know his largest expense (`transaction`) between 2 dates. Create a new route `GetMaxTransaction` which takes 2 timestamps in parameters.
+we have an app - Powder - which is a video creation and sharing app. There is a feed of Posts (one post = video + comments + likes).
+At the moment, the feed is the same for all users.
+We want to customise it. To do this, we need to :
+- to retrieve relevant information from the user regarding the viewing of posts
+- store this information in a cloud
+- use this information to customise the feeds for each user
+Please describe all the steps needed to obtain these feeds, on the mobile applications and the backend.
+Be as specific as possible about the tools you will be using (especially in the cloud) - please describe as much as possible about the settings of the tools, and make a diagram explaining all the steps of your solution. You can add your schema/diagram directly in this repository.
