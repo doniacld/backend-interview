@@ -69,8 +69,9 @@ Questions :
 
 we have an app - Powder - which is a video creation and sharing app. There is a feed of Posts (one post = video + comments + likes).
 At the moment, the feed is the same for all users.
-We want to customise it. To do this, we need to :
-- to retrieve relevant information from the user regarding the viewing of posts
+
+We want to customise it. To do this, we need to:
+- Retrieve relevant information from the user regarding the viewing of posts
 - store this information in a cloud
 - use this information to customise the feeds for each user
 Please describe all the steps needed to obtain these feeds, on the mobile applications and the backend.
