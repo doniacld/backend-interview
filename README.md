@@ -65,14 +65,20 @@ pkg_|_ # domain
 
 ### 0.1
 
-Questions :
+Questions (text response only):
 
-we have an app - Powder - which is a video creation and sharing app. There is a feed of Posts (one post = video + comments + likes).
-At the moment, the feed is the same for all users.
+- Following a technical refactoring, we decide to modify the previous REST API "/user" in grpc. Propose a protobuf contract using the principle of this API.
 
-We want to customise it. To do this, we need to:
-- Retrieve relevant information from the user regarding the viewing of posts
-- store this information in a cloud
-- use this information to customise the feeds for each user
-Please describe all the steps needed to obtain these feeds, on the mobile applications and the backend.
-Be as specific as possible about the tools you will be using (especially in the cloud) - please describe as much as possible about the settings of the tools, and make a diagram explaining all the steps of your solution. You can add your schema/diagram directly in this repository.
+- This protobuf (and those that will follow) will be shared between the backend team, the android team and the ios team. Propose an efficient solution to document and synchronize the teams around this protobuf. 
+
+- How would you proceed to make this synchronization and documentation automatic?
+
+- Let's imagine that a new API with several microservices and asynchronous processing is designing, propose a notification solution to keep the clients (ios/android) up to date.
+
+### 0.2 (bonus)
+
+- (bonus) We want to get rid of account intermediary table and attach directly transactions to user. Write up a database migration plan (+ add some example queries).
+
+- (bonus) Add a new rule where a transaction is not accepted if there is not enough money on account.
+
+- (bonus) User now wants to know his largest expense (transaction) between 2 dates. Create a new route GetMaxTransaction which takes 2 timestamps in parameters.
