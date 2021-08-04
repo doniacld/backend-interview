@@ -26,7 +26,9 @@ func (s *Store) Fetch(ctx context.Context, f account.Filter) (account.Account, e
 		return account.Account{}, err
 	}
 
-	return a, row.Err()
+	// TODO handle this error nicely
+	//	row.Err undefined (type *sql.Row has no field or method Err)
+	return a, nil
 }
 
 func (s *Store) FetchMany(ctx context.Context, f account.Filter, callback func(account.Account) error) error {
@@ -60,4 +62,23 @@ func (s *Store) FetchMany(ctx context.Context, f account.Filter, callback func(a
 	}
 
 	return rows.Err()
+}
+
+
+// UpdateAccountTotal update the total for a given account ID
+func (s *Store) UpdateAccountTotal(ctx context.Context, f account.Filter) error {
+	b := strings.Builder{}
+
+	b.WriteString(`UPDATE account `)
+	b.WriteString(`SET total=$1 `)
+	b.WriteString(`WHERE id=$2 `)
+
+	if _, err := s.ExecContext(ctx, b.String(), []interface{}{
+		f.ID,
+		f.Total,
+	}...); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -26,5 +26,6 @@ func (s *Store) Fetch(ctx context.Context, f user.Filter) (user.User, error) {
 		return user.User{}, err
 	}
 
-	return u, row.Err()
+	// TODO DONIA
+	return u, nil
 }

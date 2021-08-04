@@ -3,6 +3,7 @@ module github.com/gustvision/backend-interview
 go 1.15
 
 require (
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/ilyakaznacheev/cleanenv v1.2.5
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/lib/pq v1.8.0

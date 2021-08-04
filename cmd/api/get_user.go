@@ -27,13 +27,23 @@ func (h *handler) GetUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logger.Error().Err(err).Msg("failed to fetch user")
 		http.Error(w, "failed to fetch user", http.StatusInternalServerError)
-
 		return
 	}
 
 	// # Compute user total
 	var total float64
-	_ = total
+	/*
+
+			totalAcc := func(a account.Account) error {
+			total += a.Total
+			// TODO not polite to not handle error here
+			return nil
+		}
+			err, errc := h.account.FetchMany(ctx, account.Filter{UserID: req.ID}, totalAcc)
+			if err != nil || errc != nil {
+				logger.Error().Err(err).Msg(fmt.Sprintf("failed to fetch accounts for user %s", req.ID))
+				http.Error(w, fmt.Sprintf("failed to fetch accounts for user %s", req.ID), http.StatusInternalServerError)
+	*/
 
 	// #Marshal results.
 	raw, err := json.Marshal(dto.GetUserResp{
