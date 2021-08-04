@@ -18,6 +18,7 @@ func TestGetUser(t *testing.T) {
 		description    string
 		body           map[string]interface{}
 		expectedOutput int
+		expectedErr bool
 	}{
 		{
 			"nominal case",
@@ -25,7 +26,9 @@ func TestGetUser(t *testing.T) {
 				"ID": "testuid",
 			},
 			http.StatusOK,
+			false,
 		},
+
 	}
 
 	for _, tc := range tt {
@@ -40,16 +43,15 @@ func TestGetUser(t *testing.T) {
 			client := &http.Client{}
 			response, err := client.Do(request)
 
-			assert.Nil(t, err)
 			assert.NotNil(t, response)
 
-			bodyErr, err := ioutil.ReadAll(response.Body)
+			_, err = ioutil.ReadAll(response.Body)
 			if err != nil {
+				// TODO assert expected error
 				panic(err)
 			}
 
 			assert.EqualValues(t, tc.expectedOutput, response.StatusCode)
-			assert.EqualValues(t, "invalid payload\n", bodyErr)
 		})
 	}
 }
