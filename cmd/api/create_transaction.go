@@ -51,7 +51,9 @@ func (h *handler) CreateTransaction(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// update the account total since the transaction is successful
-	err = h.account.UpdateTotal(ctx, account.Filter{ID: a.ID, UserID: a.UserID, Total: a.Total+1})
+	// I am not sure if the amount is positive when there is a transaction or negative...
+	// Let's be positive
+	err = h.account.UpdateTotal(ctx, account.Filter{ID: a.ID, UserID: a.UserID, Total: a.Total+req.Amount})
 	if err != nil {
 		logger.Error().Err(err).Msg(fmt.Sprintf("failed to update total account %#v", req))
 		http.Error(w, fmt.Sprintf("failed to total account %#v", req), http.StatusInternalServerError)
