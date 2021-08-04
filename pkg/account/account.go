@@ -16,7 +16,7 @@ type Filter struct {
 
 type Store interface {
 	Fetch(context.Context, Filter) (Account, error)
-	FetchMany(context.Context, Filter, func(Account) error) (error, error)
+	FetchMany(context.Context, Filter, func(Account) error) ([]Account, error)
 	UpdateTotal(context.Context, Filter) error
 }
 

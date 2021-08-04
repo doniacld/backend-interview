@@ -9,7 +9,7 @@ import (
 
 func (s *Store) Fetch(ctx context.Context, f account.Filter) (account.Account, error) {
 	b := strings.Builder{}
-	b.WriteString(`SELECT id, user_id `)
+	b.WriteString(`SELECT id, user_id, total `)
 	b.WriteString(`FROM account `)
 	b.WriteString(`WHERE user_id = $1 ;`)
 
@@ -22,18 +22,18 @@ func (s *Store) Fetch(ctx context.Context, f account.Filter) (account.Account, e
 	if err := row.Scan(
 		&a.ID,
 		&a.UserID,
+		&a.Total,
 	); err != nil {
 		return account.Account{}, err
 	}
 
-	// TODO handle this error nicely
 	//	row.Err undefined (type *sql.Row has no field or method Err)
 	return a, nil
 }
 
-func (s *Store) FetchMany(ctx context.Context, f account.Filter, callback func(account.Account) error) error {
+func (s *Store) FetchMany(ctx context.Context, f account.Filter, callback func(account.Account) error) ([]account.Account, error) {
 	b := strings.Builder{}
-	b.WriteString(`SELECT id, user_id `)
+	b.WriteString(`SELECT id, user_id, total `)
 	b.WriteString(`FROM account `)
 	b.WriteString(`WHERE user_id = $1 ;`)
 
@@ -41,27 +41,27 @@ func (s *Store) FetchMany(ctx context.Context, f account.Filter, callback func(a
 		f.UserID,
 	}...)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer func() { _ = rows.Close() }()
 
+	accounts := make([]account.Account, 0)
 	for rows.Next() {
 		var a account.Account
 
 		if err := rows.Scan(
 			&a.ID,
 			&a.UserID,
+			&a.Total,
 		); err != nil {
-			return err
+			return nil, err
 		}
 
-		if err := callback(a); err != nil {
-			return err
-		}
+		accounts = append(accounts, a)
 	}
 
-	return rows.Err()
+	return accounts, nil
 }
 
 
