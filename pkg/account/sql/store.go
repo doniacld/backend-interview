@@ -13,4 +13,3 @@ var _ account.StoreTransaction = (*Store)(nil)
 type Store struct {
 	*sql.DB
 }
-

@@ -13,7 +13,6 @@ type Filter struct {
 
 type Store interface {
 	Fetch(context.Context, Filter) (User, error)
-	FetchMany()
 }
 
 type App interface {

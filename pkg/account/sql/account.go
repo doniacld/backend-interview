@@ -65,8 +65,8 @@ func (s *Store) FetchMany(ctx context.Context, f account.Filter, callback func(a
 }
 
 
-// UpdateAccountTotal update the total for a given account ID
-func (s *Store) UpdateAccountTotal(ctx context.Context, f account.Filter) error {
+// UpdateTotal updates the total for a given account ID
+func (s *Store) UpdateTotal(ctx context.Context, f account.Filter) error {
 	b := strings.Builder{}
 
 	b.WriteString(`UPDATE account `)
