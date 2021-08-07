@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
+	"github.com/gustvision/backend-interview/pkg/account"
 	"github.com/gustvision/backend-interview/pkg/user"
 	"github.com/gustvision/backend-interview/pkg/user/dto"
 	"github.com/rs/zerolog/log"
@@ -27,13 +29,26 @@ func (h *handler) GetUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logger.Error().Err(err).Msg("failed to fetch user")
 		http.Error(w, "failed to fetch user", http.StatusInternalServerError)
-
 		return
 	}
 
 	// # Compute user total
 	var total float64
-	_ = total
+
+	// finally not using the callback, prefered to return an account array
+	useless := func(a account.Account) error {
+		return nil
+	}
+	accounts, err := h.account.FetchMany(ctx, account.Filter{UserID: req.ID}, useless)
+	if err != nil {
+		logger.Error().Err(err).Msg(fmt.Sprintf("failed to fetch accounts for user %s", req.ID))
+		http.Error(w, fmt.Sprintf("failed to fetch accounts for user %s", req.ID), http.StatusInternalServerError)
+	}
+
+	// browse all accounts and return the sum
+	for _, a := range accounts {
+		total += a.Total
+	}
 
 	// #Marshal results.
 	raw, err := json.Marshal(dto.GetUserResp{

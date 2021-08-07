@@ -39,7 +39,7 @@ For this test, we don't care about security flaws or float64 approximations.
 
 You can fork this project and add your code/answers into it.
 
-## project architecture
+## project architecture0
 
 ```
 cmd_|_ # main
@@ -57,7 +57,7 @@ pkg_|_ # domain
 
 ### 0.0
 
-- `GetUser` API route always returns a total = 0. Fix it to return approximated sum (due to float64). Hint: `account.FetchManyAccount` SQL method already exists in draft code (`handler.account` store).
+- `GetUser` API route always returns a total = 0. Fix it to return approximated sum (due to float64). Hint: `account.FetchMany` SQL method already exists in draft code (`handler.account` store).
 
 - Write a new API route `CreateTransaction` to add a new transaction. Hint: `account.InsertTransaction` SQL method already exists in draft code (`handler.account` store).
 
