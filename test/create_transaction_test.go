@@ -3,9 +3,11 @@ package test
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+
+	"github.com/rs/zerolog/log"
+	"github.com/stretchr/testify/assert"
 )
 
 const ctURL = "http://localhost:8080/transaction"
@@ -22,7 +24,7 @@ func TestCreateTransaction(t *testing.T) {
 			"nominal case",
 			map[string]interface{}{
 				"AccountID": "testaid1",
-				"Amount":    100,
+				"Amount":    100.0,
 			},
 			http.StatusCreated,
 			true,
@@ -31,8 +33,9 @@ func TestCreateTransaction(t *testing.T) {
 			"invalid account ID",
 			map[string]interface{}{
 				"AccountID": "testaid1_invalid",
+				"Amount":    100.0,
 			},
-			http.StatusBadRequest,
+			http.StatusInternalServerError,
 			false,
 		},
 	}
@@ -41,15 +44,11 @@ func TestCreateTransaction(t *testing.T) {
 		t.Run(tc.description, func(t *testing.T) {
 
 			body, err := json.Marshal(tc.body)
-			// TODO assert expected error
 			if err != nil {
-				panic(err)
+				log.Err(err)
 			}
-
 			response, err := http.Post(ctURL, "application/json", bytes.NewBuffer(body))
-			assert.Nil(t, err)
 			assert.NotNil(t, response)
-
 			assert.EqualValues(t, tc.expectedOutput, response.StatusCode)
 		})
 	}

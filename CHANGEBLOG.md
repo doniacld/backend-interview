@@ -1,18 +1,5 @@
 # Changeblog
 
-NB: I do not know config and handler are not recognized when I build.
-I could not launched my tests....
-
-    [donia@localhost backend-interview]$ make build
-    go build -o ./bin/app.out -v ./cmd/api/main.go
-    command-line-arguments
-    # command-line-arguments
-    cmd/api/main.go:42:9: undefined: config
-    cmd/api/main.go:61:7: undefined: handler
-    note: module requires Go 1.15
-    make: *** [Makefile:107: build] Error 2
-
-
 ## What I wanted to do
 
 - Write more tests for GetUser
@@ -71,7 +58,10 @@ I could have a lot to say about this part.
 I guess it is an extension of the given previous solution.
 
 ## Helpers
+
 Helper to check what is in the db:
+
+    docker exec -it postgres bash
 
     psql -h postgres -d postgres -U postgres
 

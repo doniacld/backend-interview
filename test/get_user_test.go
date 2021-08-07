@@ -3,14 +3,15 @@ package test
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"net/http"
 	"testing"
+
+	"github.com/rs/zerolog/log"
+	"github.com/stretchr/testify/assert"
 )
 
 const guURL = "http://localhost:8080/user"
-
 
 func TestGetUser(t *testing.T) {
 
@@ -18,7 +19,7 @@ func TestGetUser(t *testing.T) {
 		description    string
 		body           map[string]interface{}
 		expectedOutput int
-		expectedErr bool
+		expectedErr    bool
 	}{
 		{
 			"nominal case",
@@ -28,7 +29,14 @@ func TestGetUser(t *testing.T) {
 			http.StatusOK,
 			false,
 		},
-
+		{
+			"unknown ID",
+			map[string]interface{}{
+				"ID": "testuid_invalid",
+			},
+			http.StatusInternalServerError, // for the moment, should be a 404
+			false,
+		},
 	}
 
 	for _, tc := range tt {
@@ -47,8 +55,7 @@ func TestGetUser(t *testing.T) {
 
 			_, err = ioutil.ReadAll(response.Body)
 			if err != nil {
-				// TODO assert expected error
-				panic(err)
+				log.Err(err)
 			}
 
 			assert.EqualValues(t, tc.expectedOutput, response.StatusCode)
